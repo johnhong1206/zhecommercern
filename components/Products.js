@@ -36,7 +36,7 @@ function Products({ products }) {
   };
 
   const navtoLogin = (e) => {
-    router.push("/Login");
+    router.push("/login");
   };
 
   useEffect(() => {

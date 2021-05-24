@@ -26,7 +26,7 @@ function SuggestProduct({
   };
 
   const navtoLogin = (e) => {
-    router.push("/Login");
+    router.push("/login");
   };
 
   if (productdetailid === id) return false;
