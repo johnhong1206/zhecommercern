@@ -5,7 +5,11 @@ import Link from "next/link";
 import Currency from "react-currency-formatter";
 import { useState, useEffect } from "react";
 import { FaRegEye } from "react-icons/fa";
-import { AiOutlineLogin } from "react-icons/ai";
+import {
+  AiOutlineLogin,
+  AiFillSetting,
+  AiOutlineSetting,
+} from "react-icons/ai";
 import Fade from "react-reveal/Fade";
 import { selectmenuIsOpen } from "../features/menuSlice";
 import Menu from "./Menu";
@@ -15,6 +19,7 @@ function Products({ products }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const MenuNav = useSelector(selectmenuIsOpen);
+  const [toggleFilter, setTogglefilter] = useState(false);
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
@@ -23,16 +28,29 @@ function Products({ products }) {
     );
   };
 
+  const handleSearchName = (e) => {
+    setSearchTerm(e.target.value);
+    setSearchResults(
+      products.filter((product) => product.name.includes(searchTerm))
+    );
+  };
+
   const navtoLogin = (e) => {
     router.push("/Login");
   };
 
   useEffect(() => {
-    setSearchResults(
-      products.filter((product) =>
-        product.category.includes(searchTerm.toLocaleLowerCase())
-      )
-    );
+    if (toggleFilter) {
+      setSearchResults(
+        products.filter((product) => product.name.includes(searchTerm))
+      );
+    } else {
+      setSearchResults(
+        products.filter((product) =>
+          product.category.includes(searchTerm.toLocaleLowerCase())
+        )
+      );
+    }
   }, [searchTerm, products]);
 
   return (
@@ -68,39 +86,66 @@ function Products({ products }) {
         className={`min-h-screen flex flex-col md:flex-row mx-auto max-w-screen  `}
       >
         <div className="flex flex-col items-center justify-content p-4 bg-white">
-          <h3 className="p-1 text-center text-lg font-medium">Filter</h3>
-          <div className="w-full">
-            <input
-              value={searchTerm}
-              onChange={handleSearch}
-              className="text-black p-2 px-5 h-full bg-transparent flex-grow rounded flex-shrink rounded-l-md focus:outline-none"
-              placeholder="Filter Category (Live Filter)"
-            />
+          <div className="flex flex-row items-center space-x-2">
+            <h3 className="p-1 text-center text-xl font-medium">
+              {toggleFilter ? "Filter Name" : "Filter Category"}
+            </h3>
+            <div className="hover:text-blue-600 cursor-pointer">
+              {toggleFilter ? (
+                <AiFillSetting
+                  onClick={() => setTogglefilter(false)}
+                  className="w-6 h-6"
+                />
+              ) : (
+                <AiOutlineSetting
+                  onClick={() => setTogglefilter(true)}
+                  className="w-6 h-6"
+                />
+              )}
+            </div>
+          </div>
+
+          <div className="w-full border-b-4 border-t-4 mt-4">
+            {toggleFilter ? (
+              <input
+                value={searchTerm}
+                onChange={handleSearchName}
+                className="text-black p-2 px-5 h-full bg-transparent flex-grow rounded flex-shrink rounded-l-md focus:outline-none"
+                placeholder="Filter Name (Live Filter)"
+              />
+            ) : (
+              <input
+                value={searchTerm}
+                onChange={handleSearch}
+                className="text-black p-2 px-5 h-full bg-transparent flex-grow rounded flex-shrink rounded-l-md focus:outline-none"
+                placeholder="Filter Category (Live Filter)"
+              />
+            )}
           </div>
           <div className="flex flex-col p-4 space-y-4 cursor-pointer w-full">
             <div
               onClick={() => setSearchTerm("camera")}
               className="flex item-center justify-center  p-4 rounded-2xl hover:bg-gray-300 hover:text-white"
             >
-              <p className="">Camera</p>
+              <p className="font-medium italic">Camera</p>
             </div>
             <div
               onClick={() => setSearchTerm("cloth")}
               className="flex item-center justify-center  w-full p-4 rounded-2xl hover:bg-gray-300 hover:text-white"
             >
-              <p>Cloth</p>
+              <p className="font-medium italic">Cloth</p>
             </div>
             <div
               onClick={() => setSearchTerm("game")}
               className="flex item-center justify-center  w-full p-4 rounded-2xl hover:bg-gray-300 hover:text-white"
             >
-              <p>Game</p>
+              <p className="font-medium italic">Game</p>
             </div>
             <div
               onClick={() => setSearchTerm("phone")}
               className="flex item-center justify-center  w-full p-4 rounded-2xl hover:bg-gray-300 hover:text-white"
             >
-              <p>Phone</p>
+              <p className="font-medium italic">Phone</p>
             </div>
           </div>
           <div className="flex item-center justify-center  w-full p-4 rounded-2xl ">
