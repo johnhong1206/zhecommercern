@@ -13,6 +13,7 @@ import {
 import Fade from "react-reveal/Fade";
 import { selectmenuIsOpen } from "../features/menuSlice";
 import Menu from "./Menu";
+import { useRouter } from "next/router";
 
 function Products({ products }) {
   const darkMode = useSelector(selectDarkmode);
@@ -20,6 +21,7 @@ function Products({ products }) {
   const [searchResults, setSearchResults] = useState([]);
   const MenuNav = useSelector(selectmenuIsOpen);
   const [toggleFilter, setTogglefilter] = useState(false);
+  const router = useRouter();
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);

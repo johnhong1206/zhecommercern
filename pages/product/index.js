@@ -77,7 +77,6 @@ export async function getServerSideProps(context) {
     ...product.data(),
   }));
 
-  console.log("the product is", product);
   return {
     props: {
       product: product,
