@@ -26,7 +26,6 @@ import { closeModal } from "../features/modalSlice";
 import { auth } from "../config/firebase";
 
 function Header({ products }) {
-  console.log("headersearch", products);
   const router = useRouter();
   const darkMode = useSelector(selectDarkmode);
   const dispatch = useDispatch();
@@ -111,22 +110,26 @@ function Header({ products }) {
           >
             {!!searchResults.length ? (
               searchResults.map(({ id, name, price, category }) => (
-                <div
-                  key={Math.random()}
-                  className="p-2 mt-2 border-b-2 rounded-md border-gray-100 bg-gray-50 hover:bg-gray-400 group"
-                >
+                <>
                   <Link href={`/product/${id}`}>
-                    <h5 className="font-medium text-sm text-gray-600 group-hover:text-white ">
-                      {name}
-                    </h5>
+                    <div
+                      key={Math.random()}
+                      className="p-2 mt-2 border-b-2 rounded-md border-gray-100 bg-gray-50 hover:bg-gray-400 group"
+                    >
+                      <Link href={`/product/${id}`}>
+                        <h5 className="font-medium text-sm text-gray-600 group-hover:text-white ">
+                          {name}
+                        </h5>
+                      </Link>
+                      <Link href={`/product/${id}`}>
+                        <p className="text-xs text-gray-400 group-hover:text-white">
+                          {category}
+                          <Currency quantity={price} currency="MYR" />
+                        </p>
+                      </Link>
+                    </div>
                   </Link>
-                  <Link href={`/product/${id}`}>
-                    <p className="text-xs text-gray-400 group-hover:text-white">
-                      {category}
-                      <Currency quantity={price} currency="MYR" />
-                    </p>
-                  </Link>
-                </div>
+                </>
               ))
             ) : (
               <>

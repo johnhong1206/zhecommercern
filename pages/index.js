@@ -6,6 +6,7 @@ import Header from "../components/Header";
 import Menu from "../components/Menu";
 import ProductFeeds from "../components/ProductFeeds";
 import db, { auth } from "../config/firebase";
+import { addProducts } from "../features/cartSlice";
 import { selectDarkmode } from "../features/darkmodeSlice";
 import { selectmenuIsOpen } from "../features/menuSlice";
 import { login, selectUser } from "../features/userSlice";
@@ -15,6 +16,8 @@ export default function Home({ products }) {
   const darkMode = useSelector(selectDarkmode);
   const MenuNav = useSelector(selectmenuIsOpen);
   const user = useSelector(selectUser);
+
+  console.log(" products", products);
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
@@ -30,6 +33,10 @@ export default function Home({ products }) {
       }
     });
   }, [user]);
+
+  useEffect(() => {
+    dispatch(addProducts(products));
+  }, [products]);
 
   return (
     <div className={`${darkMode ? "bg-gray-800" : "bg-gray-100"}`}>

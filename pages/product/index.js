@@ -30,6 +30,7 @@ function index({ products }) {
   useEffect(() => {
     dispatch(addProducts(products));
   }, [products]);
+
   const dispatch = useDispatch();
   const darkMode = useSelector(selectDarkmode);
 
