@@ -9,6 +9,8 @@ import shippingReducer from "../features/shippingSlice";
 import modalReducer from "../features/modalSlice";
 import authModalReducer from "../features/authModalSlice";
 import menuReducer from "../features//menuSlice";
+import discountReducer from "../features/discountSlice";
+import pointSliceReducer from "../features/pointSlice";
 
 const reducers = combineReducers({
   darkMode: darkModeReducer,
@@ -18,6 +20,8 @@ const reducers = combineReducers({
   modal: modalReducer,
   authModal: authModalReducer,
   menu: menuReducer,
+  discount: discountReducer,
+  point: pointSliceReducer,
 });
 
 const persistConfig = {

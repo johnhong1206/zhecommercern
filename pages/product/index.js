@@ -174,7 +174,7 @@ function index({ products }) {
           /
         </span>
         <span
-          className={`hover:link font-medium ${
+          className={`hover:link font-medium  ${
             darkMode ? "text-white" : "text-gray-900"
           }`}
         >
@@ -193,22 +193,22 @@ function index({ products }) {
         <div className="flex flex-col md:flex-row scrollbar-hide">
           <div className="bg-white w-full md:w-3/12">
             <div className="">
-              <h2 className="p-4 text-center text-base md:text-lg font-medium">
+              <h2 className="p-4 text-center text-base md:text-lg xl:text-2xl font-medium">
                 Category
               </h2>
               <div className="flex flex-col p-4 items-center space-y-2">
                 {categories &&
                   categories.map((value) => (
                     <div
-                      className={`flex items-center justify-center p-2  rounded-2xl w-full cursor-pointer
-                      ${
+                      className={` uppercase flex w-full justify-center p-1 lg:p-2 items-center bg-transparent cursor-pointer hover:shadow-lg bg-gray-200 rounded-full transition transform duration-100 ease-out ${
                         value == activeCategory &&
-                        "bg-gray-500 text-white font-bold"
-                      }`}
+                        "  text-black font-bold shadow-lg bg-gray-500 scale-95 transform translate duration-150 italic"
+                      }
+              `}
                       key={value}
                       onClick={() => filterCategory(value, "category")}
                     >
-                      <p className=" italic">{value}</p>
+                      <p className="">{value}</p>
                     </div>
                   ))}
               </div>
@@ -230,7 +230,7 @@ function index({ products }) {
                 <div className="p-4">
                   <button
                     onClick={clearAllFilters}
-                    className="bg-yellow-300 hover:text-white w-full p-3 rounded-md ring-gray-200 text-sm text-gray-800 
+                    className="bg-yellow-300 hover:text-white w-full p-3 rounded-md scale-95 transform translate duration-150 ease-out ring-gray-200 text-sm text-gray-800 
     hover:ring-1 focus:outline-none active:ring-gray-300 hover:shadow-md"
                   >
                     Clear Filter

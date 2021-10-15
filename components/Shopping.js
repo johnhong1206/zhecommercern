@@ -110,9 +110,9 @@ function Shopping({ setPhase }) {
         </h1>
       </div>
 
-      {user && cart.length > 0 ? (
+      {cart.length > 0 ? (
         <button
-          className={`w-full p-3 rounded-md ring-blue-100 md:text-2xl text-4xl mt-6 text-gray-100 bg-blue-800 hover:bg-blue-600 hover:ring-1 transition ease-in-out duration-150 ${
+          className={`w-full px-1 py-2 rounded-md ring-blue-100 md:text-3xl text-2xl mt-6 text-gray-100 bg-blue-800 hover:bg-blue-600 hover:ring-1 transition ease-in-out duration-150 ${
             darkMode ? "text-gray-800 " : "text-gray-200 bg-blue-700"
           }`}
           onClick={() => setPhase("shipping")}
@@ -121,12 +121,12 @@ function Shopping({ setPhase }) {
         </button>
       ) : (
         <button
-          className={`w-full p-3 rounded-md ring-blue-100 md:text-2xl text-xl mt-6 text-gray-100 bg-red-500 hover:bg-green-500 hover:ring-1 transition ease-in-out duration-150 ${
+          className={`w-full px-1 py-1 rounded-md ring-blue-100 md:text-2xl text-xl mt-6 text-gray-100 bg-red-500 hover:bg-green-500 hover:ring-1 transition ease-in-out duration-150 ${
             darkMode ? "text-gray-800 " : "text-gray-200 "
           }`}
-          onClick={() => router.push("/login")}
+          onClick={() => router.push("/product")}
         >
-          Sign In to Checkout <FaArrowRight className="inline" />
+          Please Shop More <FaArrowRight className="inline" />
         </button>
       )}
     </div>

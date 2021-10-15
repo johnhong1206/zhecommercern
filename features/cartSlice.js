@@ -6,6 +6,7 @@ export const cartSlice = createSlice({
     cart: [],
     products: null,
     filteredProducts: null,
+    finalPrice: 0,
   },
   reducers: {
     addProducts: (state, action) => {

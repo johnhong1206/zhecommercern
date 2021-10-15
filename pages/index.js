@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Banner from "../components/Banner";
 import Header from "../components/Header";
@@ -9,25 +9,56 @@ import db, { auth } from "../config/firebase";
 import { addProducts } from "../features/cartSlice";
 import { selectDarkmode } from "../features/darkmodeSlice";
 import { selectmenuIsOpen } from "../features/menuSlice";
+import { getUserPoint } from "../features/pointSlice";
 import { login, selectUser } from "../features/userSlice";
+import { updateShipping } from "../features/shippingSlice";
 
 export default function Home({ products }) {
   const dispatch = useDispatch();
   const darkMode = useSelector(selectDarkmode);
   const MenuNav = useSelector(selectmenuIsOpen);
   const user = useSelector(selectUser);
+  const [userData, setUserData] = useState([]);
 
-  console.log(" products", products);
+  function getUserData() {
+    const unsubscribe = db
+      .collection("users")
+      .doc(user?.uid)
+      .onSnapshot((snapshot) => setUserData(snapshot.data()));
+    return unsubscribe;
+  }
+  useEffect(() => {
+    if (user) {
+      getUserData();
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (user) {
+      const payload = {
+        contactName: userData?.username,
+        contactNumber: userData?.contact,
+        shippingAddress: userData?.address,
+      };
+      dispatch(updateShipping(payload));
+      dispatch(getUserPoint(Number(userData?.point)));
+    }
+  }, [user]);
+
+  //console.log("point", userData?.point);
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
         dispatch(
           login({
-            displayName: user.displayName,
-            email: user.email,
-            photoUrl: user.photoURL,
-            uid: user.uid,
+            displayName: user?.displayName,
+            email: user?.email,
+            photoUrl: user?.photoURL,
+            uid: user?.uid,
+            point: userData?.point,
+            contact: userData?.contact,
+            address: userData?.address,
           })
         );
       }

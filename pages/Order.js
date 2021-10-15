@@ -8,8 +8,10 @@ import Head from "next/head";
 import OrderItemList from "../components/OrderItemList";
 import Menu from "../components/Menu";
 import { selectmenuIsOpen } from "../features/menuSlice";
+import { useRouter } from "next/router";
 
 function Order({ products }) {
+  const router = useRouter();
   const user = useSelector(selectUser);
   const darkMode = useSelector(selectDarkmode);
   const [orders, setOrders] = useState([]);
@@ -33,10 +35,8 @@ function Order({ products }) {
     }
   }, [user]);
 
-  console.log("orders>>>", orders);
-
   return (
-    <div className={`${darkMode ? "bg-gray-800" : "bg-gray-100"}`}>
+    <div className={` ${darkMode ? "bg-gray-800" : "bg-gray-100"}`}>
       <Head>
         <title>Zong Hong Ecommerce-{user?.displayName}-Orders</title>
         <link rel="icon" href="/favicon.ico" />
@@ -45,14 +45,15 @@ function Order({ products }) {
       {user ? (
         <main className="mx-auto max-w-screen flex flex-col items-center justify-center overflow-hidden">
           {orders?.map((order) => (
-            <OrderItemList order={order} />
+            <OrderItemList order={order} id={order.id} />
           ))}
           <div className="pb-10" />
         </main>
       ) : (
         <main className="h-screen grid place-items-center">
           <h1
-            className={`text-6xl ${
+            onClick={() => router.push("/login")}
+            className={`text-6xl cursor-pointer hover:underline ${
               darkMode ? "text-gray-100" : "text-gray-800"
             }`}
           >

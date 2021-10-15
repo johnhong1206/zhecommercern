@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"; //redux
 import { useSelector, useDispatch } from "react-redux";
+import { selectUser } from "../features/userSlice";
 import {
   updateShipping,
   resetShipping,
@@ -8,21 +9,26 @@ import {
 //icons
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { selectDarkmode } from "../features/darkmodeSlice";
+import { useRouter } from "next/router";
 
 function Shipping({ setPhase }) {
   const dispatch = useDispatch();
   const shipping = useSelector(selectShipping);
   const darkMode = useSelector(selectDarkmode);
+  const user = useSelector(selectUser);
+  const router = useRouter();
 
   const [name, setName] = useState(
-    shipping && shipping.contactName ? shipping.contactName : ""
+    shipping && shipping.contactName ? user?.displayName : ""
   );
   const [nameError, setNameError] = useState("");
 
   const [contactNumber, setContactNumber] = useState(
     shipping && shipping.contactNumber ? shipping.contactNumber : ""
   );
+
   const [contactNumberError, setContactNumberError] = useState("");
+
   const [shippingMethod, setShippingMethod] = useState(
     shipping && shipping.shippingMethod ? shipping.shippingMethod : ""
   );
@@ -40,7 +46,7 @@ function Shipping({ setPhase }) {
 
   const toPayment = () => {
     //validation
-    if (name.length == 0) {
+    if (!name) {
       setNameError("Please fill in name");
       return setName("");
     }
@@ -55,6 +61,7 @@ function Shipping({ setPhase }) {
       shippingMethod: shippingMethod,
       preferredTime: preferredTime,
       availableDate: availableDate,
+      shippingAddress: shippingAddress,
       shippingCost: Number(shippingMethod),
     };
     dispatch(updateShipping(payload));
@@ -65,9 +72,10 @@ function Shipping({ setPhase }) {
       <div className="mb-4">
         <h1 className="text-xl">Your name</h1>
         <input
-          className="w-full p-1 rounded border-2 border-gray-300 text-black"
+          className="w-full p-1 rounded border-2 border-gray-300 text-black uppercase"
           type="text"
-          placeholder={nameError && nameError}
+          value={name}
+          placeholder={shipping?.contactName || (nameError && nameError)}
           onChange={(e) => setName(e.target.value)}
         />
       </div>
@@ -76,7 +84,11 @@ function Shipping({ setPhase }) {
         <input
           className="w-full p-1 rounded border-2 border-gray-300 text-black"
           type="text"
-          placeholder={contactNumberError && contactNumberError}
+          value={contactNumber}
+          placeholder={
+            shipping?.contactNumber ||
+            (contactNumberError && contactNumberError)
+          }
           onChange={(e) => setContactNumber(e.target.value)}
         />
       </div>
@@ -93,19 +105,19 @@ function Shipping({ setPhase }) {
               Choose a method:
             </option>
             <option
-              value={0}
+              value={Number(0)}
               onChange={(e) => setShippingMethod(e.target.value)}
             >
               Pick up at Shop
             </option>
             <option
-              value={10}
+              value={Number(10)}
               onChange={(e) => setShippingMethod(e.target.value)}
             >
               Pick up at meeting point
             </option>
             <option
-              value={50}
+              value={Number(50)}
               onChange={(e) => setShippingMethod(e.target.value)}
             >
               Ship to address
@@ -143,6 +155,7 @@ function Shipping({ setPhase }) {
       <div className="mb-4">
         <h1 className="text-xl">Shipping address:</h1>
         <input
+          value={shippingAddress}
           className="w-full p-1 rounded border-2 border-gray-300 text-black"
           type="text"
           placeholder=""
@@ -152,17 +165,26 @@ function Shipping({ setPhase }) {
 
       <div className="flex gap-5 flex-grow">
         <button
-          className="p-2 text-xl rounded text-blue-600 border-2 border-blue-600"
+          className="uppercase p-2 text-xl rounded text-blue-600 border-2 border-blue-600"
           onClick={() => setPhase("shopping")}
         >
           <FaArrowLeft className="inline" /> Back
         </button>
-        <button
-          className="p-2 text-xl rounded text-gray-200 bg-blue-600 flex-grow hover:bg-blue-900 hover:ring-1 transition ease-in-out duration-150"
-          onClick={toPayment}
-        >
-          Proceed to payment <FaArrowRight className="inline" />
-        </button>
+        {user ? (
+          <button
+            className="p-2 text-xl rounded text-gray-200 bg-blue-600 flex-grow hover:bg-blue-900 hover:ring-1 transition ease-in-out duration-150"
+            onClick={toPayment}
+          >
+            Proceed to payment <FaArrowRight className="inline" />
+          </button>
+        ) : (
+          <button
+            className="p-2 text-xl rounded text-gray-200 bg-blue-600 flex-grow hover:bg-blue-900 hover:ring-1 transition ease-in-out duration-150"
+            onClick={() => router.push("/login")}
+          >
+            Please Login <FaArrowRight className="inline" />
+          </button>
+        )}
       </div>
     </div>
   );

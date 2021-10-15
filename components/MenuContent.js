@@ -8,6 +8,7 @@ import {
   AiFillShop,
   AiOutlineHome,
 } from "react-icons/ai";
+import { FaUser } from "react-icons/fa";
 import { useRouter } from "next/router";
 import { emptycCart, selectCart } from "../features/cartSlice";
 import { auth } from "../config/firebase";
@@ -44,6 +45,11 @@ function MenuContent() {
 
   const navtoLogin = (e) => {
     router.push("/login");
+    dispatch(closemenu());
+  };
+
+  const navProfile = () => {
+    router.push(`/user/${user?.uid}`);
     dispatch(closemenu());
   };
 
@@ -106,6 +112,15 @@ function MenuContent() {
           <BiShoppingBag className="w-12 h-12" />
           <p className="text-xl font-medium">Order</p>
         </div>
+        {user && (
+          <div
+            onClick={navProfile}
+            className={`flex items-center space-x-4 border-b-4 border-transparent hover:text-yellow-500 hover:border-yellow-500 cursor-pointer `}
+          >
+            <FaUser className="w-12 h-12" />
+            <p className="text-xl font-medium">Profile</p>
+          </div>
+        )}
         <div
           onClick={navtoCart}
           className={`relative flex items-center border-b-4 border-transparent hover:text-[#FF4500] hover:border-[#FF4500] cursor-pointer `}
@@ -116,7 +131,6 @@ function MenuContent() {
           <FiShoppingCart className="w-12 h-12 " />
           <p className="text-xl font-medium ml-4">Cart</p>
         </div>
-
         {user ? (
           <div
             onClick={handleAuthentication}

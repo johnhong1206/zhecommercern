@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Currency from "react-currency-formatter";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 let _ = require("lodash");
 import Fade from "react-reveal/Fade";
 
@@ -14,6 +14,7 @@ import {
   addQuantity,
   removeQuantity,
   selectCart,
+  selectProducts,
 } from "../features/cartSlice";
 import { selectDarkmode } from "../features/darkmodeSlice";
 //import { selectProduct } from "../features/productSlice";
@@ -42,14 +43,16 @@ function ProductDetails({
   const darkMode = useSelector(selectDarkmode);
   const MenuNav = useSelector(selectmenuIsOpen);
   const [activeImage, setActiveImage] = useState(activeImg[0]);
+  const all_products = useSelector(selectProducts);
+  const [suggestProducts, setSuggestProducts] = useState([]);
 
-  console.log(activeImage);
+  console.log("all_products", all_products);
 
   const suggestProductRef = db
     .collection("products")
     .where("category", "==", category);
 
-  const [suggestProducts] = useCollection(category && suggestProductRef);
+  //const [suggestProducts] = useCollection(category && suggestProductRef);
 
   const addToCartHandler = (item) => {
     if (cart.find((product) => product.id == item.id)) {
@@ -63,6 +66,7 @@ function ProductDetails({
 
   const remove = (item) => {
     let tempItem = cart[_.findIndex(cart, { id: product.id })];
+
     if (tempItem.quantity != 1) {
       let ind = _.findIndex(cart, { id: item.id });
       return dispatch(removeQuantity(ind));
@@ -77,6 +81,13 @@ function ProductDetails({
       : "0";
   };
 
+  useEffect(() => {
+    setSuggestProducts(
+      all_products.filter((product) => product.category.includes(category))
+    );
+  }, [category]);
+
+  console.log("suggestProducts", suggestProducts);
   return (
     <>
       <Fade bottom>
@@ -194,10 +205,15 @@ function ProductDetails({
                   </p>
                   <div className="flex justify-between space-x-4 text-center mx-auto">
                     <div className=" flex flex-col items-center justify-center p-4">
-                      <FaMinus
-                        className="w-8 h-8 p-1 text-gray-200 rounded-full bg-red-600 hover:bg-red-800 cursor-pointer"
-                        onClick={() => remove(product)}
-                      />
+                      {cart.length === 0 ? (
+                        <FaMinus className="w-8 h-8 p-1 text-gray-200 rounded-full bg-red-600 hover:bg-red-800 cursor-pointer" />
+                      ) : (
+                        <FaMinus
+                          className="w-8 h-8 p-1 text-gray-200 rounded-full bg-red-600 hover:bg-red-800 cursor-pointer"
+                          onClick={() => remove(product)}
+                        />
+                      )}
+
                       <p>Remove</p>
                     </div>
                     <div className=" flex flex-col items-center justify-center p-4">
@@ -208,9 +224,9 @@ function ProductDetails({
                       </p>
                       <p className="font-medium">items</p>
                     </div>
-                    <div className=" flex flex-col items-center justify-center p-4">
+                    <div className=" flex flex-col items-center justify-center p-4 ">
                       <FaPlus
-                        className="w-8 h-8 p-1 text-gray-200 rounded-full bg-green-600 hover:bg-green-800 cursor-pointer"
+                        className="w-8 h-8 p-1 text-gray-200 rounded-full bg-green-600 hover:bg-green-800 cursor-pointer "
                         onClick={() => addToCartHandler(product)}
                       />
                       <p>Add</p>
@@ -231,15 +247,15 @@ function ProductDetails({
                   Suggent Product
                 </h1>
                 <div className="grid grid-flow-row-dense md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                  {suggestProducts?.docs.slice(0, 4).map((product) => (
+                  {suggestProducts.slice(0, 4).map((product) => (
                     <SuggestProduct
                       id={product.id}
-                      name={product.data().name}
-                      price={product.data().price}
-                      images={product.data().imageUrl}
-                      description={product.data().description}
-                      category={product.data().category}
-                      rating={product.data().rating}
+                      name={product.name}
+                      price={product.price}
+                      images={product.imageUrl}
+                      description={product.description}
+                      category={product.category}
+                      rating={product.rating}
                       productdetailid={id}
                     />
                   ))}

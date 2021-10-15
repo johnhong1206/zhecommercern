@@ -11,6 +11,7 @@ import {
   AiOutlineSearch,
   AiFillSetting,
 } from "react-icons/ai";
+import { FaUser } from "react-icons/fa";
 
 //redux
 import { useDispatch, useSelector } from "react-redux";
@@ -24,8 +25,12 @@ import { emptycCart, selectCart } from "../features/cartSlice";
 import { logout, selectUser } from "../features/userSlice";
 import { closeModal } from "../features/modalSlice";
 import { auth } from "../config/firebase";
+import { cancleDiscount } from "../features/discountSlice";
+import { resetPoint } from "../features/pointSlice";
+import { resetShipping } from "../features/shippingSlice";
 
 function Header({ products }) {
+  const dataList = products;
   const router = useRouter();
   const darkMode = useSelector(selectDarkmode);
   const dispatch = useDispatch();
@@ -34,6 +39,27 @@ function Header({ products }) {
   const [showResults, setShowResults] = useState(false);
   const cart = useSelector(selectCart);
   const user = useSelector(selectUser);
+  const excludeColumns = ["id", "color"];
+
+  const handleChange = (value) => {
+    setSearchTerm(value);
+    filterData(value);
+  };
+
+  const filterData = (value) => {
+    const Value = value.toLocaleUpperCase().trim();
+    if (Value === "") setSearchResults(dataList);
+    else {
+      const filteredData = dataList.filter((item) => {
+        return Object.keys(item).some((key) =>
+          excludeColumns.includes(key)
+            ? false
+            : item[key].toString().toLocaleUpperCase().includes(Value)
+        );
+      });
+      setSearchResults(filteredData);
+    }
+  };
 
   const handleAuthentication = () => {
     if (user) {
@@ -43,18 +69,14 @@ function Header({ products }) {
           dispatch(logout());
           dispatch(emptycCart());
           dispatch(closeModal());
+          dispatch(cancleDiscount());
+          dispatch(resetPoint());
+          dispatch(resetShipping());
         })
         .then(() => {
           router.replace("/");
         });
     }
-  };
-
-  const handleSearch = (e) => {
-    setSearchTerm(e.target.value);
-    setSearchResults(
-      products.filter((product) => product.name.includes(searchTerm))
-    );
   };
 
   const cartQty = () => {
@@ -67,7 +89,7 @@ function Header({ products }) {
 
   return (
     <header
-      className={`flex items-center p-2 justify-between shadow-lg space-x-0 md:space-x-1 lg:space-x-4 ${
+      className={` flex items-center p-2 justify-between shadow-lg space-x-0 md:space-x-1 lg:space-x-4 ${
         darkMode
           ? "text-gray-200 bg-gray-900"
           : "text-gray-800 bg-gray-200 bg-gradient-to-b from-gray-100 to-transparent"
@@ -88,7 +110,7 @@ function Header({ products }) {
           onBlur={() => setShowResults(false)}
           onFocus={() => setShowResults(true)}
           value={searchTerm}
-          onChange={handleSearch}
+          onChange={(e) => handleChange(e.target.value)}
           placeholder="Search anything you need... (Live Search by Filter)"
           className={`text-black p-2 px-5 h-full width-6 flex-grow rounded flex-shrink rounded-l-md focus:outline-none
           ${darkMode ? "bg-white" : "bg-gray-100"}`}
@@ -122,10 +144,14 @@ function Header({ products }) {
                         </h5>
                       </Link>
                       <Link href={`/product/${id}`}>
-                        <p className="text-xs text-gray-400 group-hover:text-white">
-                          {category}
-                          <Currency quantity={price} currency="MYR" />
-                        </p>
+                        <div className="flex flex-row items-center space-x-1">
+                          <p className="text-xs text-gray-400 group-hover:text-white">
+                            {category}
+                          </p>
+                          <p className="text-xs text-gray-400 group-hover:text-white">
+                            <Currency quantity={price} currency="MYR" />
+                          </p>
+                        </div>
                       </Link>
                     </div>
                   </Link>
@@ -182,6 +208,16 @@ function Header({ products }) {
             <BiShoppingBag className="w-8 h-8" />
             <p className="ml-2 font-medium">Order</p>
           </div>
+          {user && (
+            <div
+              onClick={() => router.push(`/user/${user?.uid}`)}
+              className="flex items-center justify-center flex-col text-center group cursor-pointer hover:link w-16 h-16 hover:text-blue-500 hover:animate-pulse"
+            >
+              <FaUser className="w-8 h-8" />
+              <p className="ml-2 font-medium">Profile</p>
+            </div>
+          )}
+
           <div
             onClick={() => router.push("/Cart")}
             className="relative flex items-center justify-center flex-col text-center group cursor-pointer hover:link w-16 h-16 hover:text-blue-500 hover:animate-pulse"
