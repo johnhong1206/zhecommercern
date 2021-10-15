@@ -341,7 +341,7 @@ function Payment({ setPhase }) {
   return (
     <div className={`p-4 ${darkMode ? "text-gray-200" : "text-gray-800"}`}>
       <h1 className="mb-4 text-center text-2xl font-bold">
-        Confirm your order: {newFinalPoint}
+        Confirm your order:
       </h1>
       <div className="flex flex-col gap-2 mb-8">
         {cart.map((item) => (
