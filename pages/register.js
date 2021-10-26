@@ -1,10 +1,16 @@
-import { useSelector } from "react-redux";
 import Head from "next/head";
-import { selectDarkmode } from "../features/darkmodeSlice";
 import React, { useState } from "react";
 import { useRouter } from "next/router";
-import db, { auth } from "../config/firebase";
+
+//components
 import Header from "../components/Header";
+
+//redux
+import { useSelector } from "react-redux";
+import { selectDarkmode } from "../features/darkmodeSlice";
+
+//firebase
+import db, { auth } from "../config/firebase";
 
 function register() {
   const [username, setUsername] = useState("");

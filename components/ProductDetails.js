@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import Currency from "react-currency-formatter";
 import React, { useState, useEffect } from "react";
-let _ = require("lodash");
 import Fade from "react-reveal/Fade";
 
 //rdux
@@ -10,7 +9,6 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   addToCart,
   removeFromCart,
-  emptycCart,
   addQuantity,
   removeQuantity,
   selectCart,
@@ -18,13 +16,12 @@ import {
 } from "../features/cartSlice";
 import { selectDarkmode } from "../features/darkmodeSlice";
 //import { selectProduct } from "../features/productSlice";
-import { FaPlus, FaMinus, FaShoppingCart } from "react-icons/fa";
-import Menu from "./Menu";
+import { FaPlus, FaMinus } from "react-icons/fa";
 import { selectmenuIsOpen } from "../features/menuSlice";
 import db from "../config/firebase";
-import { useCollection } from "react-firebase-hooks/firestore";
-import ProductList from "./ProductList";
 import SuggestProduct from "./SuggestProduct";
+
+let _ = require("lodash");
 
 function ProductDetails({
   id,

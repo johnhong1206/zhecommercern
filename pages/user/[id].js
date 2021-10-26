@@ -1,16 +1,22 @@
-import React from "react";
+import { useState, useEffect } from "react";
+import Head from "next/head";
+
+//components
 import Header from "../../components/Header";
 import Menu from "../../components/Menu";
-import Head from "next/head";
+
+//redux
 import { useSelector } from "react-redux";
 import { selectmenuIsOpen } from "../../features/menuSlice";
 import { selectUser } from "../../features/userSlice";
 import { selectDarkmode } from "../../features/darkmodeSlice";
+
+//icons
 import { AiOutlineEdit } from "react-icons/ai";
 import { FiSave } from "react-icons/fi";
-import { useState } from "react";
+
+//firebase
 import db from "../../config/firebase";
-import { useEffect } from "react";
 
 function UserProfile() {
   const darkMode = useSelector(selectDarkmode);

@@ -1,14 +1,18 @@
-import { useSelector } from "react-redux";
 import Header from "../components/Header";
 import { selectDarkmode } from "../features/darkmodeSlice";
 import Head from "next/head";
 
-//config
+//components
+import CartPage from "../components/CartPage";
+import Menu from "../components/Menu";
+
+//config & firebase
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { publishkey } from "../config/stripe";
-import CartPage from "../components/CartPage";
-import Menu from "../components/Menu";
+
+//redux
+import { useSelector } from "react-redux";
 import { selectmenuIsOpen } from "../features/menuSlice";
 import { selectUser } from "../features/userSlice";
 

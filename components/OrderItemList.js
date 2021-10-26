@@ -1,13 +1,19 @@
-import { useState, useEffect, useRef } from "react";
 import moment from "moment";
 import Currency from "react-currency-formatter";
+
+//firebase
+import db from "../config/firebase";
+
+//components
+import OrderItem from "./OrderItem";
+
+//icons
 import { MdCheckBoxOutlineBlank, MdCheckBox } from "react-icons/md";
+
+//redux
+import { useSelector } from "react-redux";
 import { selectDarkmode } from "../features/darkmodeSlice";
 import { selectUser } from "../features/userSlice";
-import { useSelector } from "react-redux";
-import { useSpring, animated } from "react-spring";
-import OrderItem from "./OrderItem";
-import db from "../config/firebase";
 
 function OrderItemList({ order, id }) {
   const darkMode = useSelector(selectDarkmode);

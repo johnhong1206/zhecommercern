@@ -1,6 +1,8 @@
 //redux
 import { useSelector, useDispatch } from "react-redux";
 import { selectDarkmode, updateDarkMode } from "../features/darkmodeSlice";
+
+//icons
 import { BsSun, BsMoon } from "react-icons/bs";
 
 function DarkMode() {

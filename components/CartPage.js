@@ -1,6 +1,10 @@
 import { useState } from "react";
+
+//redux
 import { useSelector } from "react-redux";
 import { selectDarkmode } from "../features/darkmodeSlice";
+
+//components
 import Done from "./Done";
 import Payment from "./Payment";
 import Shipping from "./Shipping";

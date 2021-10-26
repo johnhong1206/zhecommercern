@@ -1,5 +1,8 @@
-import { IoIosCheckmarkCircle } from "react-icons/io";
 import { useRouter } from "next/router";
+//icon
+import { IoIosCheckmarkCircle } from "react-icons/io";
+
+//redux
 import { selectDarkmode } from "../features/darkmodeSlice";
 import { useSelector } from "react-redux";
 

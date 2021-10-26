@@ -1,14 +1,16 @@
 import Image from "next/image";
-import Currency from "react-currency-formatter";
-import { useSelector } from "react-redux";
-import { selectUser } from "../features/userSlice";
-import { FaPlus, FaMinus, FaShoppingCart, FaRegEye } from "react-icons/fa";
-import { AiOutlineLogin } from "react-icons/ai";
-import styles from "../styles/Product.module.css";
-import Fade from "react-reveal/Fade";
-
 import { useRouter } from "next/router";
 import Link from "next/link";
+import Currency from "react-currency-formatter";
+import Fade from "react-reveal/Fade";
+
+//redux
+import { useSelector } from "react-redux";
+import { selectUser } from "../features/userSlice";
+
+//icons
+import { FaRegEye } from "react-icons/fa";
+import { AiOutlineLogin } from "react-icons/ai";
 
 function ProductList({
   id,
@@ -19,7 +21,6 @@ function ProductList({
   category,
   rating,
 }) {
-  const user = useSelector(selectUser);
   const router = useRouter();
 
   const enterProductDetails = () => {

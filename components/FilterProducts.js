@@ -3,11 +3,7 @@ import Fade from "react-reveal/Fade";
 import Image from "next/image";
 import Currency from "react-currency-formatter";
 import { FaRegEye } from "react-icons/fa";
-import {
-  AiOutlineLogin,
-  AiFillSetting,
-  AiOutlineSetting,
-} from "react-icons/ai";
+import { AiOutlineLogin } from "react-icons/ai";
 
 function FilterProducts({
   id,
@@ -16,8 +12,6 @@ function FilterProducts({
   category,
   description,
   imageUrl,
-
-  products,
   rating,
 }) {
   const navtoLogin = (e) => {

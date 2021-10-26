@@ -1,7 +1,9 @@
 import ProductList from "./ProductList";
+import smallbanner from "../images/small banner.jpg";
+
+//firebase
 import { useCollection } from "react-firebase-hooks/firestore";
 import db from "../config/firebase";
-import smallbanner from "../images/small banner.jpg";
 
 function ProductFeeds({ products }) {
   const [realtimeProduct] = useCollection(db.collection("products"));

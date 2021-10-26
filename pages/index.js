@@ -1,17 +1,23 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+
+//components
 import Banner from "../components/Banner";
 import Header from "../components/Header";
 import Menu from "../components/Menu";
 import ProductFeeds from "../components/ProductFeeds";
-import db, { auth } from "../config/firebase";
+
+//redux
+import { useDispatch, useSelector } from "react-redux";
 import { addProducts } from "../features/cartSlice";
 import { selectDarkmode } from "../features/darkmodeSlice";
 import { selectmenuIsOpen } from "../features/menuSlice";
 import { getUserPoint } from "../features/pointSlice";
 import { login, selectUser } from "../features/userSlice";
 import { updateShipping } from "../features/shippingSlice";
+
+//firebase
+import db, { auth } from "../config/firebase";
 
 export default function Home({ products }) {
   const dispatch = useDispatch();

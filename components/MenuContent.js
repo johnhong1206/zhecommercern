@@ -1,20 +1,28 @@
+import { useRouter } from "next/router";
+
+//firebase
+import { auth } from "../config/firebase";
+
+//components
+import DarkMode from "./DarkMode";
+
+//redux
 import { useDispatch, useSelector } from "react-redux";
 import { selectDarkmode } from "../features/darkmodeSlice";
+import { logout, selectUser } from "../features/userSlice";
+import { emptycCart, selectCart } from "../features/cartSlice";
+import { closemenu } from "../features/menuSlice";
+
+//icons
 import { BiShoppingBag } from "react-icons/bi";
 import { FiShoppingCart } from "react-icons/fi";
+import { FaUser } from "react-icons/fa";
 import {
   AiOutlineLogin,
   AiOutlineLogout,
   AiFillShop,
   AiOutlineHome,
 } from "react-icons/ai";
-import { FaUser } from "react-icons/fa";
-import { useRouter } from "next/router";
-import { emptycCart, selectCart } from "../features/cartSlice";
-import { auth } from "../config/firebase";
-import { logout, selectUser } from "../features/userSlice";
-import DarkMode from "./DarkMode";
-import { closemenu } from "../features/menuSlice";
 
 function MenuContent() {
   const darkMode = useSelector(selectDarkmode);

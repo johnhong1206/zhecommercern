@@ -1,12 +1,18 @@
-import { useSelector } from "react-redux";
-import Head from "next/head";
-import { selectDarkmode } from "../features/darkmodeSlice";
 import React, { useState } from "react";
+import Head from "next/head";
 import { useRouter } from "next/router";
-import { auth } from "../config/firebase";
+
+//components
 import Header from "../components/Header";
 import Menu from "../components/Menu";
+
+//redux
+import { useSelector } from "react-redux";
+import { selectDarkmode } from "../features/darkmodeSlice";
 import { selectmenuIsOpen } from "../features/menuSlice";
+
+//firebase
+import { auth } from "../config/firebase";
 
 function Login() {
   const [email, setEmail] = useState("");

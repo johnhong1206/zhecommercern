@@ -1,33 +1,31 @@
 import React, { useState } from "react";
+import { useRouter } from "next/router";
+
 import Link from "next/link";
+import Currency from "react-currency-formatter";
+
+//components
 import DarkMode from "./DarkMode";
+
+//icon
+import { AiFillShop, AiOutlineSearch, AiOutlineMenu } from "react-icons/ai";
+import { FaUser } from "react-icons/fa";
 import { BiShoppingBag } from "react-icons/bi";
 import { FiShoppingCart } from "react-icons/fi";
-import Currency from "react-currency-formatter";
-import {
-  AiOutlineLogin,
-  AiOutlineLogout,
-  AiFillShop,
-  AiOutlineSearch,
-  AiFillSetting,
-} from "react-icons/ai";
-import { FaUser } from "react-icons/fa";
 
 //redux
 import { useDispatch, useSelector } from "react-redux";
 import { selectDarkmode } from "../features/darkmodeSlice";
-
-import HeaderOptions from "./HeaderOptions";
-import { useRouter } from "next/router";
-import { AiOutlineMenu } from "react-icons/ai";
 import { openmenu } from "../features/menuSlice";
 import { emptycCart, selectCart } from "../features/cartSlice";
 import { logout, selectUser } from "../features/userSlice";
 import { closeModal } from "../features/modalSlice";
-import { auth } from "../config/firebase";
 import { cancleDiscount } from "../features/discountSlice";
 import { resetPoint } from "../features/pointSlice";
 import { resetShipping } from "../features/shippingSlice";
+
+//firebase
+import { auth } from "../config/firebase";
 
 function Header({ products }) {
   const dataList = products;

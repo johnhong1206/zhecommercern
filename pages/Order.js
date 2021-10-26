@@ -1,14 +1,21 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
+import Head from "next/head";
+
+//components
 import Header from "../components/Header";
-import db from "../config/firebase";
+import Menu from "../components/Menu";
+
+import OrderItemList from "../components/OrderItemList";
+
+//redux
+import { useSelector } from "react-redux";
+import { selectmenuIsOpen } from "../features/menuSlice";
 import { selectDarkmode } from "../features/darkmodeSlice";
 import { selectUser } from "../features/userSlice";
-import Head from "next/head";
-import OrderItemList from "../components/OrderItemList";
-import Menu from "../components/Menu";
-import { selectmenuIsOpen } from "../features/menuSlice";
-import { useRouter } from "next/router";
+
+//firebase
+import db from "../config/firebase";
 
 function Order({ products }) {
   const router = useRouter();

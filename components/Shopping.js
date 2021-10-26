@@ -1,5 +1,9 @@
 import React from "react";
-import { useState } from "react";
+import { useRouter } from "next/router";
+import Image from "next/image";
+import Link from "next/link";
+
+//redux
 import { useSelector, useDispatch } from "react-redux";
 import {
   removeFromCart,
@@ -7,14 +11,14 @@ import {
   removeQuantity,
   selectCart,
 } from "../features/cartSlice";
+import { selectUser } from "../features/userSlice";
 import { selectDarkmode } from "../features/darkmodeSlice";
-let _ = require("lodash");
+
+//icons
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 import { FaArrowRight } from "react-icons/fa";
-import Image from "next/image";
-import Link from "next/link";
-import { selectUser } from "../features/userSlice";
-import { useRouter } from "next/router";
+
+let _ = require("lodash");
 
 function Shopping({ setPhase }) {
   const dispatch = useDispatch();

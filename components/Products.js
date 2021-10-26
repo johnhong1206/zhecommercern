@@ -1,19 +1,25 @@
-import { useSelector } from "react-redux";
-import { selectDarkmode } from "../features/darkmodeSlice";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import Currency from "react-currency-formatter";
-import { useState, useEffect } from "react";
+import Fade from "react-reveal/Fade";
+
+//redux
+import { useSelector } from "react-redux";
+import { selectDarkmode } from "../features/darkmodeSlice";
+import { selectmenuIsOpen } from "../features/menuSlice";
+
+//icons
 import { FaRegEye } from "react-icons/fa";
 import {
   AiOutlineLogin,
   AiFillSetting,
   AiOutlineSetting,
 } from "react-icons/ai";
-import Fade from "react-reveal/Fade";
-import { selectmenuIsOpen } from "../features/menuSlice";
+
+//components
 import Menu from "./Menu";
-import { useRouter } from "next/router";
 
 function Products({ products }) {
   const darkMode = useSelector(selectDarkmode);

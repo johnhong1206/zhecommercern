@@ -1,11 +1,8 @@
-import { useEffect, useState } from "react"; //redux
+import { useState } from "react";
+//redux
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser } from "../features/userSlice";
-import {
-  updateShipping,
-  resetShipping,
-  selectShipping,
-} from "../features/shippingSlice";
+import { updateShipping, selectShipping } from "../features/shippingSlice";
 //icons
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { selectDarkmode } from "../features/darkmodeSlice";

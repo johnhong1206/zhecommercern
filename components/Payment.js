@@ -1,15 +1,16 @@
-import { useEffect, useState, useRef } from "react";
-import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
-import { useDispatch, useSelector } from "react-redux";
-import axios from "../config/axios";
-import firebase from "firebase";
-import db from "../config/firebase";
-import { MdCancel } from "react-icons/md";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Currency from "react-currency-formatter";
-import { useCollection, useDocument } from "react-firebase-hooks/firestore";
 
+//config & firebase
+import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import axios from "../config/axios";
+import firebase from "firebase";
+import db from "../config/firebase";
+
+//redux
+import { useDispatch, useSelector } from "react-redux";
 import { selectShipping, resetShipping } from "../features/shippingSlice";
 import { selectUser } from "../features/userSlice";
 import {
@@ -19,11 +20,6 @@ import {
   removeQuantity,
   selectCart,
 } from "../features/cartSlice";
-
-//icons
-import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import { selectDarkmode } from "../features/darkmodeSlice";
 import {
   selectDiscount10,
   getDiscount10,
@@ -42,7 +38,13 @@ import {
   addFinalPrice,
   selectFinalPrice,
 } from "../features/pointSlice";
-import { set } from "lodash";
+
+//icons
+import { MdCancel } from "react-icons/md";
+//icons
+import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { selectDarkmode } from "../features/darkmodeSlice";
 
 function Payment({ setPhase }) {
   const dispatch = useDispatch();

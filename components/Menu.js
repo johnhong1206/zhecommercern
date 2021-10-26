@@ -1,11 +1,14 @@
 //redux
 import { useDispatch } from "react-redux";
+import { closemenu } from "../features/menuSlice";
+
 //spring
 import { useSpring, animated } from "react-spring";
 //icons
 import { MdCancel } from "react-icons/md";
+
+//components
 import MenuContent from "./MenuContent";
-import { closemenu } from "../features/menuSlice";
 
 function Menu() {
   const dispatch = useDispatch();

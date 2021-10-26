@@ -1,12 +1,11 @@
 import Image from "next/image";
-import Currency from "react-currency-formatter";
-import { useSelector } from "react-redux";
-import { selectUser } from "../features/userSlice";
-import { FaPlus, FaMinus, FaShoppingCart, FaRegEye } from "react-icons/fa";
-import { AiOutlineLogin } from "react-icons/ai";
-
 import { useRouter } from "next/router";
 import Link from "next/link";
+import Currency from "react-currency-formatter";
+
+//icons
+import { FaRegEye } from "react-icons/fa";
+import { AiOutlineLogin } from "react-icons/ai";
 
 function SuggestProduct({
   id,
@@ -18,7 +17,6 @@ function SuggestProduct({
   rating,
   productdetailid,
 }) {
-  const user = useSelector(selectUser);
   const router = useRouter();
 
   const enterProductDetails = () => {

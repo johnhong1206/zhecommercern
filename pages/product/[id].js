@@ -1,17 +1,16 @@
-import React, { useState, useEffect } from "react";
 import Head from "next/head";
 
-//config
+//components
+import ProductDetails from "../../components/ProductDetails";
+import Header from "../../components/Header";
+import Menu from "../../components/Menu";
+
+//firebase
 import db from "../../config/firebase";
 
 //redux
-
-import ProductDetails from "../../components/ProductDetails";
-import { useRouter } from "next/router";
-import Header from "../../components/Header";
 import { selectDarkmode } from "../../features/darkmodeSlice";
 import { useSelector } from "react-redux";
-import Menu from "../../components/Menu";
 import { selectmenuIsOpen } from "../../features/menuSlice";
 
 function ProductScreen({ product, products }) {
