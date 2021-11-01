@@ -1,11 +1,12 @@
 import moment from "moment";
 import Currency from "react-currency-formatter";
+import dynamic from "next/dynamic";
 
 //firebase
 import db from "../config/firebase";
 
 //components
-import OrderItem from "./OrderItem";
+const OrderItem = dynamic(() => import("./OrderItem"));
 
 //icons
 import { MdCheckBoxOutlineBlank, MdCheckBox } from "react-icons/md";

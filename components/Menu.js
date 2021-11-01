@@ -8,6 +8,7 @@ import { useSpring, animated } from "react-spring";
 import { MdCancel } from "react-icons/md";
 
 //components
+
 import MenuContent from "./MenuContent";
 
 function Menu() {

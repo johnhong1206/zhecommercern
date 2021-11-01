@@ -1,9 +1,10 @@
 import Head from "next/head";
+import dynamic from "next/dynamic";
 
 //components
-import ProductDetails from "../../components/ProductDetails";
-import Header from "../../components/Header";
-import Menu from "../../components/Menu";
+const Header = dynamic(() => import("../../components/Header"));
+const ProductDetails = dynamic(() => import("../../components/ProductDetails"));
+const Menu = dynamic(() => import("../../components/Menu"));
 
 //firebase
 import db from "../../config/firebase";

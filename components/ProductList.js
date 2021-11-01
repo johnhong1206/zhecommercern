@@ -4,10 +4,6 @@ import Link from "next/link";
 import Currency from "react-currency-formatter";
 import Fade from "react-reveal/Fade";
 
-//redux
-import { useSelector } from "react-redux";
-import { selectUser } from "../features/userSlice";
-
 //icons
 import { FaRegEye } from "react-icons/fa";
 import { AiOutlineLogin } from "react-icons/ai";

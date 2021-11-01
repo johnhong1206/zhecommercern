@@ -1,9 +1,10 @@
 import Head from "next/head";
 import React, { useState } from "react";
 import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
 
 //components
-import Header from "../components/Header";
+const Header = dynamic(() => import("../components/Header"));
 
 //redux
 import { useSelector } from "react-redux";

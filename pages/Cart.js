@@ -1,10 +1,10 @@
-import Header from "../components/Header";
-import { selectDarkmode } from "../features/darkmodeSlice";
 import Head from "next/head";
+import dynamic from "next/dynamic";
 
 //components
-import CartPage from "../components/CartPage";
-import Menu from "../components/Menu";
+const CartPage = dynamic(() => import("../components/CartPage"));
+const Menu = dynamic(() => import("../components/Menu"));
+const Header = dynamic(() => import("../components/Header"));
 
 //config & firebase
 import { loadStripe } from "@stripe/stripe-js";
@@ -15,6 +15,7 @@ import { publishkey } from "../config/stripe";
 import { useSelector } from "react-redux";
 import { selectmenuIsOpen } from "../features/menuSlice";
 import { selectUser } from "../features/userSlice";
+import { selectDarkmode } from "../features/darkmodeSlice";
 
 function Cart() {
   const darkMode = useSelector(selectDarkmode);

@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import dynamic from "next/dynamic";
 
 //components
-import Header from "../components/Header";
-import Menu from "../components/Menu";
-
-import OrderItemList from "../components/OrderItemList";
+const Header = dynamic(() => import("../components/Header"));
+const Menu = dynamic(() => import("../components/Menu"));
+const OrderItemList = dynamic(() => import("../components/OrderItemList"));
 
 //redux
 import { useSelector } from "react-redux";

@@ -134,7 +134,7 @@ function Header({ products }) {
                   <Link href={`/product/${id}`}>
                     <div
                       key={Math.random()}
-                      className="p-2 mt-2 border-b-2 rounded-md border-gray-100 bg-gray-50 hover:bg-gray-400 group"
+                      className="z-50 p-2 mt-2 border-b-2 rounded-md border-gray-100 bg-gray-50 hover:bg-gray-400 group"
                     >
                       <Link href={`/product/${id}`}>
                         <h5 className="font-medium text-sm text-gray-600 group-hover:text-white ">

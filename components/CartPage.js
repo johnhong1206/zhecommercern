@@ -1,14 +1,15 @@
 import { useState } from "react";
+import dynamic from "next/dynamic";
 
 //redux
 import { useSelector } from "react-redux";
 import { selectDarkmode } from "../features/darkmodeSlice";
 
 //components
-import Done from "./Done";
-import Payment from "./Payment";
-import Shipping from "./Shipping";
-import Shopping from "./Shopping";
+const Shopping = dynamic(() => import("./Shopping"));
+const Shipping = dynamic(() => import("./Shipping"));
+const Payment = dynamic(() => import("./Payment"));
+const Done = dynamic(() => import("./Done"));
 
 function CartPage() {
   const darkMode = useSelector(selectDarkmode);

@@ -1,4 +1,6 @@
-import ProductList from "./ProductList";
+import dynamic from "next/dynamic";
+const ProductList = dynamic(() => import("./ProductList"));
+
 import smallbanner from "../images/small banner.jpg";
 
 //firebase

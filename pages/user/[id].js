@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import Head from "next/head";
+import dynamic from "next/dynamic";
 
 //components
-import Header from "../../components/Header";
-import Menu from "../../components/Menu";
+const Header = dynamic(() => import("../../components/Header"));
+const Menu = dynamic(() => import("../../components/Menu"));
 
 //redux
 import { useSelector } from "react-redux";

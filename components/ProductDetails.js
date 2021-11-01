@@ -1,4 +1,6 @@
 import Image from "next/image";
+import dynamic from "next/dynamic";
+
 import Link from "next/link";
 import Currency from "react-currency-formatter";
 import React, { useState, useEffect } from "react";
@@ -19,7 +21,7 @@ import { selectDarkmode } from "../features/darkmodeSlice";
 import { FaPlus, FaMinus } from "react-icons/fa";
 import { selectmenuIsOpen } from "../features/menuSlice";
 import db from "../config/firebase";
-import SuggestProduct from "./SuggestProduct";
+const SuggestProduct = dynamic(() => import("./SuggestProduct"));
 
 let _ = require("lodash");
 

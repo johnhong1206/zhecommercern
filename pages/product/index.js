@@ -1,9 +1,17 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
+import Head from "next/head";
+import InputRange from "react-input-range";
+import "react-input-range/lib/css/index.css";
+import Fade from "react-reveal/Fade";
 
-import { useDispatch, useSelector } from "react-redux";
+//conffig
 import db from "../../config/firebase";
-import Header from "../../components/Header";
+import { getUniqueValues } from "../../utils/helpers";
+
+//redux
+import { useDispatch, useSelector } from "react-redux";
 import {
   addProducts,
   clearFilters,
@@ -11,20 +19,12 @@ import {
   selectProducts,
   updateFilters,
 } from "../../features/cartSlice";
-import { getUniqueValues } from "../../utils/helpers";
-import FilterProducts from "../../components/FilterProducts";
-import InputRange from "react-input-range";
-import "react-input-range/lib/css/index.css";
 import { selectDarkmode } from "../../features/darkmodeSlice";
-import Head from "next/head";
-import {
-  AiOutlineLogin,
-  AiFillSetting,
-  AiOutlineSetting,
-} from "react-icons/ai";
-import Fade from "react-reveal/Fade";
+
 import { selectmenuIsOpen } from "../../features/menuSlice";
-import Menu from "../../components/Menu";
+const Header = dynamic(() => import("../../components/Header"));
+const FilterProducts = dynamic(() => import("../../components/FilterProducts"));
+const Menu = dynamic(() => import("../../components/Menu"));
 
 function index({ products }) {
   useEffect(() => {

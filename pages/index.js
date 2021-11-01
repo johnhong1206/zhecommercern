@@ -1,11 +1,12 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
 
 //components
-import Banner from "../components/Banner";
-import Header from "../components/Header";
-import Menu from "../components/Menu";
-import ProductFeeds from "../components/ProductFeeds";
+const Banner = dynamic(() => import("../components/Banner"));
+const Header = dynamic(() => import("../components/Header"));
+const Menu = dynamic(() => import("../components/Menu"));
+const ProductFeeds = dynamic(() => import("../components/ProductFeeds"));
 
 //redux
 import { useDispatch, useSelector } from "react-redux";
