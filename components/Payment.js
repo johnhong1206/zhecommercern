@@ -37,6 +37,7 @@ import {
   selectFinalPoint,
   addFinalPrice,
   selectFinalPrice,
+  getUserPoint,
 } from "../features/pointSlice";
 
 //icons
@@ -58,7 +59,7 @@ function Payment({ setPhase }) {
   const [processing, setProcessing] = useState("");
   const [error, setError] = useState(null);
   const [disabled, setDisabled] = useState(true);
-  const [clientSecret, setClientSecret] = useState(true);
+  const [clientSecret, setClientSecret] = useState(null);
   const [verified, setVerified] = useState(false);
   const [code, setCode] = useState("");
   const [errorCode, setErrorCode] = useState("");
@@ -78,37 +79,24 @@ function Payment({ setPhase }) {
   const discount10 = useSelector(selectDiscount10);
   const discount20 = useSelector(selectDiscount20);
   const discount10percent = useSelector(selectDiscount10percent);
-  const [discount, setDisCount] = useState(false);
-  const [discountCode, setDiscountCode] = useState("");
 
   //price
   const finalPrice = useSelector(selectFinalPrice);
-  const [cost, setCost] = useState(Number(0));
 
-  const [userDatas, setUserDatas] = useState([]);
+  console.log("clientSecret", clientSecret);
 
-  function getUserData() {
+  useEffect(() => {
     const unsubscribe = db
       .collection("users")
       .doc(user?.uid)
-      .onSnapshot((snapshot) => setUserDatas(snapshot.data()));
+      .onSnapshot((snapshot) => setUserData(snapshot.data()));
     return unsubscribe;
-  }
-
-  useEffect(() => {
-    if (user) {
-      getUserData();
-    }
-  }, [user]);
+  }, [db, user]);
 
   const checkCode = (codes) => {
-    const code = userDatas?.usedDiscountCode?.includes(codes);
-
+    const code = userData?.usedDiscountCode?.includes(codes);
     return code;
   };
-  console.log("userDatas?.usedDiscountCode", userDatas);
-
-  console.log("Check Code", checkCode("super10"));
 
   useEffect(() => {
     if (cart) {
@@ -124,39 +112,35 @@ function Payment({ setPhase }) {
     let newFinalPoint = Math.round(
       Number(userPoint) + Number(newPricepoint) - Number(coin * 100)
     );
-
     setFinalPoint(newFinalPoint);
   });
 
   useEffect(() => {
+    dispatch(getUserPoint(userData?.point));
     dispatch(getPricePoint(pricePoint));
     dispatch(getFinalPoint(finalPoint));
-  });
+  }, [userData, pricePoint, finalPoint]);
 
   const verifiedCode = () => {
     if (!checkCode(code)) {
       if (code === "super10") {
         dispatch(getDiscount10(true));
         setVerified(true);
-        setDisCount(true);
-        setDiscountCode("super10");
       } else if (code === "super20") {
         dispatch(getDiscount20(true));
         setVerified(true);
-        setDisCount(true);
-        setDiscountCode("super20");
       } else if (code === "ultra10") {
         dispatch(getDiscount10percent(true));
         setVerified(true);
-        setDisCount(true);
+      } else if (code === "") {
+        setCode("");
+        setErrorCode("Plese Enter the code");
       } else {
         setCode("");
-        setDisCount(false);
         setErrorCode("Wrong Code please try agian");
       }
     } else {
       setCode("");
-      setDisCount(false);
       setErrorCode("Code used please try agian");
     }
   };
@@ -172,20 +156,11 @@ function Payment({ setPhase }) {
     }
   };
 
-  console.log("coin", coin);
-
-  const retrunshipping = () => {
-    setPhase("shipping");
-    dispatch(cancleDiscount());
-    setDisCount(false);
-  };
-
   const cancleCode = () => {
     dispatch(cancleDiscount());
     setCode("");
     setVerified(false);
     setErrorCode("");
-    setDisCount(false);
   };
 
   const renderMethod = () => {
@@ -226,12 +201,14 @@ function Payment({ setPhase }) {
       totalCost = totalCost + item.quantity * item.price;
     });
     let newCost = totalCost + shipping?.shippingCost - coin;
+    let discountPercent10 = Number(totalCost) * 0.1;
+
     if (discount10) {
       return newCost - 10;
     } else if (discount20) {
-      return newCost - 20 - coin;
+      return newCost - 20;
     } else if (discount10percent) {
-      return newCost - coin - newCost * 0.1;
+      return newCost - discountPercent10;
     } else {
       return newCost;
     }
@@ -260,15 +237,17 @@ function Payment({ setPhase }) {
   useEffect(() => {
     //generate the special stripe secret which allows us to charge a customer
     const getClientSecret = async () => {
-      const response = await axios({
-        method: "post",
-        // Stripe expects the total in a currencies subunits
-        url: `/payments/create?total=${finalPrice * 100}`,
-      });
-      setClientSecret(response.data.clientSecret);
+      if (!disabled) {
+        const response = await axios({
+          method: "post",
+          // Stripe expects the total in a currencies subunits
+          url: `/payments/create?total=${finalPrice * 100}`,
+        });
+        setClientSecret(response.data.clientSecret);
+      } else setClientSecret(null);
     };
     getClientSecret();
-  }, [cart]);
+  }, [disabled, cart]);
 
   console.log("ClientSecret", clientSecret);
 
@@ -340,6 +319,14 @@ function Payment({ setPhase }) {
     setDisabled(event.empty);
     setError(event.error ? event.error.message : "");
   };
+
+  const navShipping = () => {
+    setError(null);
+    setProcessing(false);
+    dispatch(cancleDiscount());
+    setPhase("shipping");
+  };
+
   return (
     <div className={`p-4 ${darkMode ? "text-gray-200" : "text-gray-800"}`}>
       <h1 className="mb-4 text-center text-2xl font-bold">
@@ -470,9 +457,23 @@ function Payment({ setPhase }) {
           <p>Total Cost: </p>
           <Currency quantity={finalPrice} currency="MYR" />
         </div>
+        <div className="flex flex-row justify-between font-bold">
+          <p>Total Point: </p>
+          <p>{finalPoint} pt</p>
+        </div>
       </div>
-      <div>
+      <div className="mt-1">
         <form onSubmit={handleSubmit}>
+          {!clientSecret && (
+            <p className={`text-center font-bold text-red-500`}>
+              Connecting ... Please Fill in Card Number
+            </p>
+          )}
+          {clientSecret && (
+            <p className={`text-center font-bold text-green-500`}>
+              Network Access Ready for Payment
+            </p>
+          )}
           <CardElement
             onChange={handleChange}
             options={{
@@ -493,7 +494,7 @@ function Payment({ setPhase }) {
           <div className="flex gap-5 mt-5 justify-between">
             <button
               className="uppercase p-2 text-xl rounded text-blue-600 border-2 border-blue-600"
-              onClick={() => setPhase("shipping")}
+              onClick={navShipping}
             >
               <FaArrowLeft className="inline" /> Back
             </button>
@@ -506,10 +507,11 @@ function Payment({ setPhase }) {
                 disabled ||
                 succeeded ||
                 cart?.length === 0 ||
-                !user
+                !user ||
+                !clientSecret
               }
             >
-              {processing ? "Processing" : "Buy Now"}{" "}
+              {processing ? "Processing" : "Buy Now"}
               <FaArrowRight className="inline" />
             </button>
           </div>

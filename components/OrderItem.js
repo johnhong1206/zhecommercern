@@ -4,7 +4,7 @@ function OrderItem({ id, item }) {
   return (
     <div className="">
       <Image
-        src={item.imageUrl}
+        src={item?.imageUrl || item?.image}
         at="Order Item"
         height={300}
         width={300}

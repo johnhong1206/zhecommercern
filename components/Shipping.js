@@ -64,6 +64,7 @@ function Shipping({ setPhase }) {
     dispatch(updateShipping(payload));
     setPhase("payment");
   };
+
   return (
     <div className={`p-10 ${darkMode ? "text-gray-200" : "text-gray-800"}`}>
       <div className="mb-4">
