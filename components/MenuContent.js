@@ -22,6 +22,7 @@ import {
   AiOutlineLogout,
   AiFillShop,
   AiOutlineHome,
+  AiOutlineSearch,
 } from "react-icons/ai";
 
 function MenuContent() {
@@ -33,6 +34,11 @@ function MenuContent() {
 
   const navtoHome = (e) => {
     router.push("/");
+    dispatch(closemenu());
+  };
+
+  const navtoSearch = () => {
+    router.push("/search");
     dispatch(closemenu());
   };
 
@@ -86,7 +92,7 @@ function MenuContent() {
 
   return (
     <div
-      className={`w-full h-full p-8 md:p-16 text-center  ${
+      className={`w-full h-full p-8 md:p-16 text-center overflow-y-scroll scrollbar-hide  ${
         darkMode ? "bg-gray-800 text-gray-100" : "bg-gray-100 text-gray-700"
       }`}
     >
@@ -105,6 +111,13 @@ function MenuContent() {
         >
           <AiOutlineHome className="w-12 h-12" />
           <p className="text-xl font-medium">Home</p>
+        </div>
+        <div
+          onClick={navtoSearch}
+          className={`flex items-center space-x-4 border-b-4 border-transparent hover:text-blue-500 hover:border-blue-500 cursor-pointer `}
+        >
+          <AiOutlineSearch className="w-12 h-12" />
+          <p className="text-xl font-medium">Search</p>
         </div>
         <div
           onClick={navtoProduct}
