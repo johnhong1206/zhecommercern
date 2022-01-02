@@ -1,8 +1,6 @@
 import dynamic from "next/dynamic";
 const ProductList = dynamic(() => import("./ProductList"));
 
-import smallbanner from "../images/small banner.jpg";
-
 //firebase
 import { useCollection } from "react-firebase-hooks/firestore";
 import db from "../config/firebase";
@@ -39,7 +37,11 @@ function ProductFeeds({ products }) {
                 description={product.description}
               />
             ))}
-      <img src={smallbanner} alt="smallbanner" class="md:col-span-full" />
+      <img
+        src="/images/smbanner.jpg"
+        alt="smallbanner"
+        class="md:col-span-full"
+      />
       <div class="md:col-span-2">
         {realtimeProduct
           ? realtimeProduct?.docs
@@ -97,7 +99,7 @@ function ProductFeeds({ products }) {
               />
             ))}
       <img
-        src={smallbanner}
+        src="/images/smbanner.jpg"
         alt="smallbanner"
         class="px-5 md:col-span-4 mx-auto rounded-lg"
       />
