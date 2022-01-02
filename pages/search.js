@@ -9,7 +9,7 @@ import Menu from "../components/Menu";
 import db from "../config/firebase";
 const ProductList = dynamic(() => import("../components/ProductList"));
 
-function Search({ products }) {
+function search({ products }) {
   const darkMode = useSelector(selectDarkmode);
   const MenuNav = useSelector(selectmenuIsOpen);
   const dataList = products;
@@ -87,7 +87,7 @@ function Search({ products }) {
   );
 }
 
-export default Search;
+export default search;
 export async function getServerSideProps(context) {
   const ref = db.collection("products");
 

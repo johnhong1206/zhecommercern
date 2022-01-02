@@ -4,7 +4,6 @@ import dynamic from "next/dynamic";
 import Head from "next/head";
 import InputRange from "react-input-range";
 import "react-input-range/lib/css/index.css";
-import Fade from "react-reveal/Fade";
 
 //conffig
 import db from "../../config/firebase";
