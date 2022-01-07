@@ -1,5 +1,2 @@
-export const publishkey =
-  "pk_test_51IIpnQK90HVgXEzgKJbYd2mjnsSGq1ZLBEDe3u2K1gQbUQL0l7vCd9cVSRIP4qlDV8UX1ByKhAeTInqFw9nH0Rz800ZhYXXbEG";
-
-export const secretkey =
-  "sk_test_51IIpnQK90HVgXEzgU6WZeb0cKiYimWOpFtaj81iugctAB7hyQRXHIQQdeNjR8gPkTCJbE3q2U1ujbePfzm98ryQD00mgaDEgOp";
+export const publishkey = process.env.NEXT_PUBLIC_STRIPE_PUBLISH_KEY;
+export const secretkey = process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY;

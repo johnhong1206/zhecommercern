@@ -19,9 +19,11 @@ import { selectDarkmode } from "../features/darkmodeSlice";
 
 function Cart() {
   const darkMode = useSelector(selectDarkmode);
-  const promise = loadStripe(publishkey);
+  const promise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISH_KEY);
   const MenuNav = useSelector(selectmenuIsOpen);
   const user = useSelector(selectUser);
+
+  console.log("promise", promise);
 
   return (
     <div>

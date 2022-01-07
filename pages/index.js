@@ -27,6 +27,8 @@ export default function Home({ products }) {
   const user = useSelector(selectUser);
   const [userData, setUserData] = useState([]);
 
+  console.log("product", products?.length);
+
   function getUserData() {
     const unsubscribe = db
       .collection("users")
@@ -50,7 +52,7 @@ export default function Home({ products }) {
       dispatch(updateShipping(payload));
       dispatch(getUserPoint(Number(userData?.point)));
     }
-  }, [user]);
+  }, [user, userData]);
 
   //console.log("point", userData?.point);
 
@@ -73,7 +75,9 @@ export default function Home({ products }) {
   }, [user]);
 
   useEffect(() => {
-    dispatch(addProducts(products));
+    if (products?.length > 0) {
+      dispatch(addProducts(products));
+    }
   }, [products]);
 
   return (
