@@ -1,7 +1,7 @@
-This is Full Stack Ecommerce Webpage
+This is Full Stack Ecommerce APP
 This Project is built by Istagram clone built with NextJs, Redux, Tailwind CSS, Firebase, StripeAPI
 
-The native app of this webpage is https://github.com/johnhong1206/zhEcommerce
+The webpage of this webpage is https://github.com/johnhong1206/zhEcommerce
 
 ---Main Function---
 1) Product Feeds function
