@@ -1,5 +1,6 @@
-This is Full Stack Ecommerce APP
-This Project is built by Istagram clone built with NextJs, Redux, Tailwind CSS, Firebase, StripeAPI
+This is Full Stack Ecommerce React Native APP
+
+This Project is built with React Native, React Native Tailwind CSS, Firebase, StripeAPI
 
 The webpage of this webpage is https://github.com/johnhong1206/zhEcommerce
 
@@ -13,8 +14,8 @@ The webpage of this webpage is https://github.com/johnhong1206/zhEcommerce
 7) Member Points
 8) Coupon Discount
 9) Product Filter
-10) dark mode
-11) product suggestrion
+10) product suggestion
+11) Custom Product Search Function
 
 
 
