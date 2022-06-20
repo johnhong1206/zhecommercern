@@ -1,10 +1,9 @@
+## Ecommer React Native
 This is Full Stack Ecommerce React Native APP
-
 This Project is built with React Native, React Native Tailwind CSS, Firebase, StripeAPI
-
 The webpage of this webpage is https://github.com/johnhong1206/zhEcommerce
 
----Main Function---
+## Main Function---
 1) Product Feeds function
 2) Product Details
 3) Cart Function
@@ -19,8 +18,7 @@ The webpage of this webpage is https://github.com/johnhong1206/zhEcommerce
 
 
 
-
----Future Update Plan---
+## Future Update Plan---
 1) Better Product depails Page
 2) Whatsapp integration
 3) product review
